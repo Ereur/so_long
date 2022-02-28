@@ -6,7 +6,7 @@
 /*   By: aamoussa <aamoussa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:47:45 by aamoussa          #+#    #+#             */
-/*   Updated: 2022/02/24 11:41:38 by aamoussa         ###   ########.fr       */
+/*   Updated: 2022/02/26 13:50:51 by aamoussa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ void	*new_image(t_game game)
 		game.new_imge.position.x,
 		game.new_imge.position.y
 		);
-	// mlx_destroy_image(game.mlx_ptr, game.new_imge.img_ptr);
-	return(game.new_imge.img_ptr);
+	mlx_destroy_image(game.mlx_ptr, game.new_imge.img_ptr);
+	return (game.new_imge.img_ptr);
 }
 
 
@@ -47,8 +47,6 @@ void	*new_image(t_game game)
 void	game_loader(char **map)
 {
 	t_game	game;
-	t_game  *test;
-	t_listimg	*head;
 
 	game.mlx_ptr = mlx_init();
 	game.win_size = find_map_size(game, map);
@@ -59,14 +57,9 @@ void	game_loader(char **map)
 	game.new_imge.path = "wall1.xpm";
 	game.new_imge.img_ptr = NULL;
 	upwall_builder(&game, map);
-	// leftwall_builder(game);
-	// rightwall_builder(game);
-	// insertplayer(&game);
-	head = storeimges();
-	game.first_img = head;
-	game.current_img = head;
-	test = &game;
 	game.map = map;
+	storeimges(&game);
+	// printf("%s \n %s \n", game.current_img->content, game.first_img->next->content);
 	// mlx_loop_hook(game.mlx_ptr, playermove, &game);
 	mlx_hook(game.win_ptr, 2, 0, update, &game);
 	mlx_loop(game.mlx_ptr);

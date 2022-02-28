@@ -6,7 +6,7 @@
 /*   By: aamoussa <aamoussa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 07:13:19 by aamoussa          #+#    #+#             */
-/*   Updated: 2022/02/24 08:17:48 by aamoussa         ###   ########.fr       */
+/*   Updated: 2022/02/28 08:13:14 by aamoussa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,22 +46,17 @@ t_listimg	*ft_lstaddimgnew(char *content)
 	return (ptr);
 }
 
-t_listimg	*storeimges(void)
+void	storeimges(t_game *game)
 {
 	t_listimg	*node1;
 	t_listimg	*node2;
 	t_listimg	*node3;
 	t_listimg	*node4;	
-	t_listimg	*head;
 
-	head = NULL;
-	node1 = ft_lstaddimgnew("./so_long_utils/sprites/p3.xpm");
-	node2 = ft_lstaddimgnew("./so_long_utils/sprites/p6.xpm");
-	node3 =ft_lstaddimgnew("./so_long_utils/sprites/p12.xpm");
-	node4 = ft_lstaddimgnew("./so_long_utils/sprites/player.xpm");	
-	ft_lstadd(&head, node1);
-	ft_lstadd(&head, node2);
-	ft_lstadd(&head, node3);
-	ft_lstadd(&head, node4);
-	return (head);
+	game->first_img = NULL;
+	node1 = ft_lstaddimgnew("pacmanupclose.xpm");
+	node2 = ft_lstaddimgnew("pacmanup.xpm");
+	ft_lstadd(&(game->first_img), node1);
+	ft_lstadd(&(game->first_img), node2);
+	game->current_img = game->first_img;
 }

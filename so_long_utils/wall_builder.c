@@ -6,7 +6,7 @@
 /*   By: aamoussa <aamoussa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 10:24:27 by aamoussa          #+#    #+#             */
-/*   Updated: 2022/02/24 11:38:44 by aamoussa         ###   ########.fr       */
+/*   Updated: 2022/02/26 10:35:19 by aamoussa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,15 @@ void	upwall_builder(t_game *game, char **map)
 			{
 				game->new_imge.path = "collec.xpm";
 				game->new_imge.position.x += 48;
+				game->collectile_nbr += 1;
 				new_image(*game);
 			}
 			else if (map[i][j] == EXIT)
 			{
 				game->new_imge.path = "closeddoor.xpm";
 				game->new_imge.position.x += 48;
+				game->door_position.x = game->new_imge.position.x;
+				game->door_position.y = game->new_imge.position.y;
 				new_image(*game);
 			}
 			else if (map[i][j] == '0')

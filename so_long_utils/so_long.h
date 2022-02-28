@@ -6,7 +6,7 @@
 /*   By: aamoussa <aamoussa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 11:11:49 by aamoussa          #+#    #+#             */
-/*   Updated: 2022/02/24 11:40:51 by aamoussa         ###   ########.fr       */
+/*   Updated: 2022/02/28 10:02:46 by aamoussa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,11 @@ typedef enum s_components
 	WALL = '1',
 	PLAYER = 'P',
 	COLLECTIBLE = 'C',
-	EXIT = 'E',	
+	EXIT = 'E',
+	UP = 1,
+	DOWN = 2,
+	RIGHT = 3,
+	LEFT = 4,
 }	t_components;
 
 typedef struct s_listofimages
@@ -52,13 +56,17 @@ typedef struct s_game
 {
 	t_vector	win_size;
 	t_vector	player_position;
+	int			count_moves;
+	int			collectile_nbr;
 	t_vector	door_position;
+	int			flag;
 	void		*mlx_ptr;
 	void		*win_ptr;
 	t_image		new_imge;
 	t_listimg	*current_img;
 	t_listimg	*first_img;
 	char		**map;
+	int			playerdirection;
 }	t_game;
 
 char		**map_reader(char *file);
@@ -71,7 +79,7 @@ void		leftwall_builder(t_game game);
 void		rightwall_builder(t_game game);
 void		insertplayer(t_game *game);
 int			playermove(int key, t_game *game);
-t_listimg	*storeimges(void);
+void		storeimges(t_game *game);
 void		move_up(t_game *game);
 void		move_down(t_game *game);
 int			update(int key, t_game *game);
