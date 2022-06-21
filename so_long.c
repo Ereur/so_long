@@ -6,11 +6,13 @@
 /*   By: aamoussa <aamoussa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 11:13:02 by aamoussa          #+#    #+#             */
-/*   Updated: 2022/02/21 09:44:32 by aamoussa         ###   ########.fr       */
+/*   Updated: 2022/03/20 17:35:52 by aamoussa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./so_long_utils/so_long.h"
+
+/* what im doing :  im in game loader trying to find the player node number */
 
 int	main(int argc, char **argv)
 {

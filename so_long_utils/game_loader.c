@@ -6,7 +6,7 @@
 /*   By: aamoussa <aamoussa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/20 12:47:45 by aamoussa          #+#    #+#             */
-/*   Updated: 2022/02/26 13:50:51 by aamoussa         ###   ########.fr       */
+/*   Updated: 2022/03/27 05:26:49 by aamoussa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ void	*new_image(t_game game)
 	return (game.new_imge.img_ptr);
 }
 
-
-
 void	game_loader(char **map)
 {
 	t_game	game;
@@ -58,9 +56,14 @@ void	game_loader(char **map)
 	game.new_imge.img_ptr = NULL;
 	upwall_builder(&game, map);
 	game.map = map;
+	game.graph = graph(map, &game);
+	find_j(game.player_x_y.x, game.player_x_y.y,&game.player_node, game.map);
 	storeimges(&game);
-	// printf("%s \n %s \n", game.current_img->content, game.first_img->next->content);
-	// mlx_loop_hook(game.mlx_ptr, playermove, &game);
+	find_j(game.ghost_position.x, game.ghost_position.y, &game.ghost_node, game.map);
+	// printf("%d \n", game.ghost_node);
+	// exit(1);
+	game.test = game.player_node;
 	mlx_hook(game.win_ptr, 2, 0, update, &game);
+	mlx_loop_hook(game.mlx_ptr, playermove, &game);
 	mlx_loop(game.mlx_ptr);
 }

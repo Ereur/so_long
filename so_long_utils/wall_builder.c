@@ -6,7 +6,7 @@
 /*   By: aamoussa <aamoussa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 10:24:27 by aamoussa          #+#    #+#             */
-/*   Updated: 2022/02/26 10:35:19 by aamoussa         ###   ########.fr       */
+/*   Updated: 2022/03/27 04:06:23 by aamoussa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	upwall_builder(t_game *game, char **map)
 	i = 0;
 	game->new_imge.position.y = 0;
 	game->new_imge.position.x =	-48;
-
 	while (map[i])
 	{	
 		j = 0;
@@ -39,6 +38,9 @@ void	upwall_builder(t_game *game, char **map)
 				game->player_position.x = game->new_imge.position.x;
 				game->player_position.y = game->new_imge.position.y;
 				game->new_imge.path = "pacman.xpm";
+				game->playerdirection = RIGHT;
+				game->player_x_y.y = i;
+				game->player_x_y.x = j;
 				new_image(*game);
 			}
 			else if (map[i][j] == COLLECTIBLE)
@@ -59,6 +61,14 @@ void	upwall_builder(t_game *game, char **map)
 			else if (map[i][j] == '0')
 			{
 				game->new_imge.position.x += 48;
+			}
+			else if (map[i][j] == 'G')
+			{
+				game->new_imge.position.x += 48;
+				game->new_imge.path = "ghosts.xpm";
+				game->ghost_position.x = j;
+				game->ghost_position.y = i;
+				new_image(*game);
 			}
 			j++;
 		}

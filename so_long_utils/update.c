@@ -6,211 +6,53 @@
 /*   By: aamoussa <aamoussa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 10:02:29 by aamoussa          #+#    #+#             */
-/*   Updated: 2022/02/28 12:38:49 by aamoussa         ###   ########.fr       */
+/*   Updated: 2022/03/27 03:52:57 by aamoussa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"so_long.h"
 
-int	not_multiplied_up(t_game *game)
+int	find_the_right_node(t_game *game, t_linked_nodes *head, short	*flag)
 {
-	int	x;
-	int	y;
+	int	current;
+	int	dest;
 
-	x = (game->player_position.x) / 48;
-	y = (game->player_position.y - 24) / 48;
-	if (game->map[y][x] == WALL)
-		return (0);
-	if (game->map[y][x] == COLLECTIBLE)
+	*flag = 0;
+	current = game->player_node;
+	while (head)
 	{
-		game->map[y][x] = '0';
-		game->collectile_nbr -= 1;
+		dest = head->node_nbr;
+		if (current + 1 == dest)
+		{
+			*flag = 1;
+			return (dest);
+		}
+		head = head->next;
 	}
-	return (1);
-}
-
-int	not_multiplied_down(t_game *game)
-{
-	int	x;
-	int	y;
-
-	x = (game->player_position.x) / 48;
-	y = (game->player_position.y - 24) / 48;
-	if (game->map[y + 1][x] == WALL)
-		return (0);
-	if (game->map[y][x] == COLLECTIBLE)
-	{
-		game->map[y][x] = '0';
-		game->collectile_nbr -= 1;
-	}
-	return (1);
-}
-
-int	not_multiplied_left_loking_up(t_game *game)
-{
-	int	x;
-	int	y;
-
-	x = (game->player_position.x) / 48;
-	y = (game->player_position.y - 24) / 48;
-	if (game->map[y - 1][x - 1] == WALL)
-		return (0);
-	if (game->map[y][x] == COLLECTIBLE)
-	{
-		game->map[y][x] = '0';
-		game->collectile_nbr -= 1;
-	}
-	return (1);
-}
-
-int	not_multiplied_left(t_game *game)
-{
-	int	x;
-	int	y;
-
-	if (game->playerdirection == UP)
-	{
-		if (not_multiplied_left_loking_up(game))
-			return (1);
-		else
-			return (0);
-	}
-	// x = (game->player_position.x - 24) / 48;
-	// y = (game->player_position.y) / 48;
-	// if (game->map[y][x] == WALL)
-	// 	return (0);
-	// if (game->map[y][x] == COLLECTIBLE)
-	// {
-	// 	game->map[y][x] = '0';
-	// 	game->collectile_nbr -= 1;
-	// }
-	return (1);
-}
-
-int	check_wall_up(t_game *game)
-{	
-	int	x;
-	int	y;
-
-	if (game->player_position.y % 48 != 0)
-	{
-		if (not_multiplied_up(game))
-			return (1);
-		else
-			return (0);
-	}
-	// if (game->flag == 0)
-	// 	return (0);
-	x = game->player_position.x / 48;
-	y = game->player_position.y / 48;
-	if (game->map[y - 1][x] == WALL)
-		return (0);
-	if (game->map[y - 1][x] == COLLECTIBLE)
-	{
-		game->map[y - 1][x] = '0';
-		game->collectile_nbr -= 1;
-	}
-	game->flag = 0;
-	return (1);
-}
-
-int	check_wall_down(t_game *game)
-{
-	int	x;
-	int	y;
-
-	if (game->player_position.y % 48 != 0)
-	{
-		if (not_multiplied_down(game))
-			return (1);
-		else
-			return (0);
-	}
-	x = game->player_position.x / 48;
-	y = game->player_position.y / 48;
-	if (game->map[y + 1][x] == WALL)
-		return (0);
-	if (game->map[y + 1][x] == COLLECTIBLE)
-	{	
-		game->map[y + 1][x] = '0';
-		game->collectile_nbr -= 1;
-	}
-	return (1);
-}
-
-int	check_wall_left(t_game *game)
-{
-	int	x;
-	int	y;
-
-	printf("%0d,   %d\n",game->player_position.x, game->player_position.y);
-	if (game->player_position.x % 48 != 0 || game->player_position.y % 48 != 0)
-	{
-		if (not_multiplied_left(game))
-			return (1);
-		else
-			return (0);
-	}
-	x = game->player_position.x / 48;
-	y = game->player_position.y / 48;
-	if (game->map[y][x - 1] == WALL)
-		return (0);
-	if (game->map[y][x - 1] == COLLECTIBLE)
-	{	
-		game->map[y][x - 1] = '0';
-		game->collectile_nbr -= 1;
-	}
-	return (1);
-}
-
-int	not_multiplied_right_loking_up(t_game *game)
-{
-	int	x;
-	int	y;
-
-	x = (game->player_position.x) / 48;
-	y = (game->player_position.y - 24) / 48;
-	if (game->map[y - 1][x + 1] == WALL)
-		return (0);
-	if (game->map[y][x] == COLLECTIBLE)
-	{
-		game->map[y][x] = '0';
-		game->collectile_nbr -= 1;
-	}
-	return (1);
-}
-
-int	not_multiplied_right(t_game	*game)
-{
-	if ( game->playerdirection == UP)
-	{
-		if (not_multiplied_right_loking_up(game))
-			return (1);
-		else
-			return (0);
-	}
-	return (1);
+	return (dest);
 }
 
 int	check_wall_right(t_game *game)
 {
-	int	x;
-	int	y;
-	if (game->player_position.x % 48 != 0 || game->player_position.y % 48 != 0)
+	int				x;
+	int				y;
+	t_linked_nodes	*head;
+	int				right_node;
+	short			flag;
+
+	head = NULL;
+	creat_linked_nodes(game->graph, game->player_node, &head);
+	right_node = find_the_right_node(game, head, &flag);
+	if (game->graph[game->player_node][right_node].node == '1' && flag)
 	{
-		if (not_multiplied_right(game))
-			return (1);
-		else
-			return (0);
+		find_x_y(&x, &y, right_node, game->map);
+		game->map[y][x] = 'P';
+		game->player_node = right_node;
+		return (1);
 	}
-	x = game->player_position.x / 48;
-	y = game->player_position.y / 48;
-	if (game->map[y][x + 1] == WALL)
+	else
+	{
 		return (0);
-	if (game->map[y][x + 1] == COLLECTIBLE)
-	{	
-		game->map[y][x + 1] = '0';
-		game->collectile_nbr -= 1;
 	}
 	return (1);
 }
@@ -254,7 +96,6 @@ int	update(int key, t_game *game)
 		move_left(game);
 		game->count_moves += 1;
 		ft_printmoves(game);
-
 	}
 	else if (key == 2 && check_wall_right(game))
 	{
